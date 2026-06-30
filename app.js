@@ -487,15 +487,21 @@ function replayTour() {
   runStep(0);
 }
 
+function skipIntro() {
+  if (tActive && S.step === 'intro') {
+    hideBubble();
+    tIdx = 1;
+    runStep(1);   // sensei walks to box, shows guide1 bubble
+  }
+}
+
 function clickObject(id) {
   wakeAudio();
   if (tActive && S.step !== id) {
     if (S.step === 'intro') {
       // ANY click during intro: skip intro, show guide1 hint pointing at the box.
       // The user then clicks the box (obj-1) to open the message.
-      hideBubble();
-      tIdx = 1;
-      runStep(1);   // sensei walks to box, shows guide1 bubble
+      skipIntro();
       return;       // do NOT open any message yet
     } else {
       const c = document.getElementById('sensei');
@@ -726,4 +732,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Click anywhere in room or screen to dismiss first message (intro) and show second message
+  document.addEventListener('click', (e) => {
+    if (tActive && S.step === 'intro') {
+      // Don't bypass if they clicked the language or mute toggles
+      if (e.target.closest('.lang-toggle') || e.target.closest('.mute-toggle')) {
+        return;
+      }
+      skipIntro();
+    }
+  });
 });
