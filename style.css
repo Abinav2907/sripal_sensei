@@ -887,7 +887,6 @@ img { display: block; max-width: 100%; }
 }
 .obj.found-obj {
   opacity: 0.45;
-  pointer-events: none;
 }
 .obj.found-obj .obj-vis {
   filter: grayscale(1);
@@ -1122,6 +1121,7 @@ img { display: block; max-width: 100%; }
   z-index: 100;
   transition: left 0.85s cubic-bezier(0.4, 0, 0.2, 1), bottom 0.85s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: left, bottom;
+  pointer-events: none;
 }
 .sensei-img-wrap {
   width: min(84px, 18vw);

@@ -5,7 +5,7 @@
 
 const T = {
   en: {
-    doorTitle: "Thank You, Sensei",
+    doorTitle: "Thank You, Sripal Sensei",
     doorSubtitle: "A farewell gift from your students",
     doorCaption: "Click the door to step inside",
     painting1Label: "Our Memories",
@@ -56,7 +56,7 @@ const T = {
     replayBtn: "\u21BA Replay Guide"
   },
   jp: {
-    doorTitle: "\u5148\u751f\u3001\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3057\u305f",
+    doorTitle: "Sripal \u5148\u751f\u3001\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3057\u305f",
     doorSubtitle: "\u751f\u5f92\u4e00\u540c\u3088\u308a",
     doorCaption: "\u30c5\u30a2\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u4e2d\u306b\u5165\u3063\u3066\u304f\u3060\u3055\u3044",
     painting1Label: "\u79c1\u305f\u3061\u306e\u601d\u3044\u51fa",
@@ -544,6 +544,12 @@ function closePainting() {
   const ov = document.getElementById('painting-ov');
   if (ov) ov.classList.add('hidden');
   killSlider();
+}
+
+function closePaintingOnBg(e) {
+  if (e.target.id === 'painting-ov') {
+    closePainting();
+  }
 }
 
 function setSlider(pct) {
