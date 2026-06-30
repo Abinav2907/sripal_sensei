@@ -108,6 +108,7 @@ const T = {
   }
 };
 
+
 const S = {
   lang: 'en',
   found: new Set(),
@@ -490,11 +491,12 @@ function clickObject(id) {
   wakeAudio();
   if (tActive && S.step !== id) {
     if (S.step === 'intro' && id === 1) {
-      // Bypass intro wait \u2014 move sensei to obj-1 position immediately
+      // First click during intro: skip intro, show guide1 hint pointing at the box.
+      // Second click (when S.step === 1) will open the box message normally below.
       hideBubble();
       tIdx = 1;
-      S.step = 1;
-      moveSensei(1);
+      runStep(1);   // moves sensei to box, shows guide1 bubble
+      return;       // do NOT open the message yet
     } else {
       const c = document.getElementById('sensei');
       if (c) {

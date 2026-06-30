@@ -1257,10 +1257,11 @@ img { display: block; max-width: 100%; }
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   z-index: 5000;
-  padding: 16px;
+  padding: 52px 16px 16px;
+  overflow-y: auto;
   animation: overlay-in 0.3s ease both;
 }
 .msg-card {
@@ -1334,7 +1335,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* Final card */
-.final-bg { z-index: 6000; }
+.final-bg { z-index: 6000; padding-top: 52px; align-items: flex-start; }
 .final-card {
   position: relative;
   background: linear-gradient(160deg, #080315, #160738, #080315);
@@ -1342,11 +1343,12 @@ img { display: block; max-width: 100%; }
   border-radius: var(--r-card);
   padding: 30px 24px 24px;
   max-width: min(400px, 92vw);
+  max-height: 80vh;
+  overflow-y: auto;
   width: 100%;
   box-shadow: 0 0 45px rgba(201,150,58,0.4), 0 0 90px rgba(201,150,58,0.12), var(--sh-deep);
   animation: card-in 0.45s cubic-bezier(0.3, 1.5, 0.6, 1) both;
   text-align: center;
-  overflow: hidden;
 }
 .x-gold { color: rgba(240,226,191,0.7); }
 .x-gold:hover { background: rgba(255,255,255,0.06); }
