@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260630195941">
+  <link rel="stylesheet" href="style.css?v=20260630202641">
 
   <!-- SVG Cartoon Filter for paintings -->
   <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -32,6 +32,11 @@
     <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
     <span class="lang-sep">|</span>
     <button class="lang-btn" id="btn-jp" onclick="setLang('jp')">JP</button>
+  </div>
+
+  <!-- Mute Toggle -->
+  <div class="mute-toggle">
+    <button class="mute-btn" id="mute-btn" onclick="toggleMute()" title="Mute music" aria-label="Mute background music">&#x1F50A;</button>
   </div>
 
   <!-- Progress -->
@@ -381,9 +386,10 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260630200921"></script>
+  <script src="app.js?v=20260630202641"></script>
 </body>
 </html>
+
 
 
 

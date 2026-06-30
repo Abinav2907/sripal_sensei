@@ -190,6 +190,79 @@ function wakeAudio() {
   }
 }
 
+/* =======================================================
+   BACKGROUND MUSIC
+======================================================= */
+let bgMusic = null;
+let bgMuted = false;
+
+function initBgMusic() {
+  try {
+    if (bgMusic) return; // already initialised
+    const audio = new Audio('references/background_music.mp3');
+    audio.loop = true;
+    audio.volume = 0.27;
+    audio.preload = 'auto';
+    bgMusic = audio;
+  } catch(e) {}
+}
+
+function startBgMusic() {
+  try {
+    if (!bgMusic) initBgMusic();
+    if (!bgMusic) return;
+    if (bgMuted) return;
+    const p = bgMusic.play();
+    if (p && p.catch) p.catch(() => {});
+  } catch(e) {}
+}
+
+function toggleMute() {
+  bgMuted = !bgMuted;
+  try {
+    if (bgMusic) {
+      if (bgMuted) {
+        bgMusic.pause();
+      } else {
+        const p = bgMusic.play();
+        if (p && p.catch) p.catch(() => {});
+      }
+    }
+  } catch(e) {}
+  updateMuteIcon();
+}
+
+function updateMuteIcon() {
+  const btn = document.getElementById('mute-btn');
+  if (!btn) return;
+  btn.textContent = bgMuted ? '\uD83D\uDD07' : '\uD83D\uDD0A'; // \ud83d\udd07 or \ud83d\udd0a
+  btn.title = bgMuted ? 'Unmute music' : 'Mute music';
+  btn.setAttribute('aria-label', bgMuted ? 'Unmute background music' : 'Mute background music');
+  btn.classList.toggle('muted', bgMuted);
+}
+
+// Cleanup when user navigates away or hides the tab
+function cleanupBgMusic() {
+  try {
+    if (bgMusic) {
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
+    }
+  } catch(e) {}
+}
+window.addEventListener('pagehide', cleanupBgMusic);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    cleanupBgMusic();
+  } else if (!bgMuted && bgMusic) {
+    try {
+      const p = bgMusic.play();
+      if (p && p.catch) p.catch(() => {});
+    } catch(e) {}
+  }
+});
+
+
 function snd(type) {
   const ctx = getAC();
   if (!ctx) return;
@@ -278,6 +351,7 @@ function openDoor() {
   S.doorOpen = true;
   wakeAudio();
   snd('door');
+  startBgMusic();          // music begins as door slides open
   const fw = document.getElementById('fusuma');
   if (fw) {
     fw.classList.add('opening');
@@ -632,6 +706,8 @@ document.addEventListener('DOMContentLoaded', () => {
   applyAll();
   const btnEn = document.getElementById('btn-en');
   if (btnEn) btnEn.classList.add('active');
+  initBgMusic();       // preload audio (no playback yet)
+  updateMuteIcon();    // set correct speaker icon on first render
 
   const sen = document.getElementById('sensei');
   if (sen) {
