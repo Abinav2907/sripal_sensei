@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>先生へ — Thank You, Sensei 🌸</title>
+  <meta name="description" content="A heartfelt interactive farewell gift for our Japanese language teacher, from all students with love.">
+  <meta property="og:title" content="先生へ — Thank You, Sensei 🌸">
+  <meta property="og:description" content="An interactive farewell gift made with love by your students.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════
+       PERSISTENT GLOBAL UI
+  ════════════════════════════════════════════ -->
+  <div id="lang-toggle" class="lang-toggle" role="navigation" aria-label="Language toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')" aria-pressed="true">EN</button>
+    <span class="lang-divider">|</span>
+    <button class="lang-btn" id="btn-jp" onclick="setLang('jp')" aria-pressed="false">JP</button>
+  </div>
+
+  <!-- Progress indicator (room scene only) -->
+  <div id="progress-indicator" class="progress-indicator hidden" aria-label="Progress">
+    <div class="progress-flowers" id="progress-flowers">
+      <button class="flower-dot" data-msg="1" title="Memory 1" aria-label="Memory 1">🌸</button>
+      <button class="flower-dot" data-msg="2" title="Memory 2" aria-label="Memory 2">🌸</button>
+      <button class="flower-dot" data-msg="3" title="Memory 3" aria-label="Memory 3">🌸</button>
+      <button class="flower-dot" data-msg="4" title="Memory 4" aria-label="Memory 4">🌸</button>
+      <button class="flower-dot" data-msg="5" title="Memory 5" aria-label="Memory 5">🌸</button>
+      <button class="flower-dot" data-msg="6" title="Memory 6" aria-label="Memory 6">🌸</button>
+    </div>
+    <span id="prog-count" class="prog-count">0/6</span>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       SCENE 1 — TWILIGHT DOOR
+  ════════════════════════════════════════════ -->
+  <section id="scene-door" class="scene active" aria-label="Door scene">
+
+    <!-- Atmospheric sky layers -->
+    <div class="door-sky"></div>
+    <div class="door-sky-glow"></div>
+    <div id="stars-wrap" class="stars-wrap"></div>
+
+    <!-- Moon -->
+    <div class="moon">
+      <div class="moon-craters"></div>
+    </div>
+
+    <!-- Falling sakura petals -->
+    <div class="sakura-wrap" id="sakura-wrap"></div>
+
+    <!-- Paper lantern (left of door) -->
+    <div class="lantern-group" aria-hidden="true">
+      <div class="lantern-rope"></div>
+      <div class="lantern-cap"></div>
+      <div class="lantern-body">
+        <div class="lantern-glow-core"></div>
+        <div class="lantern-rib"></div>
+        <div class="lantern-rib"></div>
+        <div class="lantern-rib"></div>
+        <div class="lantern-rib"></div>
+        <div class="lantern-rib"></div>
+      </div>
+      <div class="lantern-fringe">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="lantern-ambient"></div>
+    </div>
+
+    <!-- Door structure -->
+    <div class="door-stage">
+      <p class="door-caption" data-i18n="doorCaption" id="door-caption-text"></p>
+
+      <div class="door-outer-frame" aria-hidden="true">
+        <div class="frame-top-rail"></div>
+        <div class="frame-side frame-side--left"></div>
+        <div class="frame-side frame-side--right"></div>
+
+        <!-- The clickable fusuma -->
+        <div class="fusuma-wrap" id="fusuma-wrap"
+             onclick="openDoor()"
+             role="button"
+             tabindex="0"
+             aria-label="Open the door"
+             onkeydown="if(event.key==='Enter'||event.key===' ')openDoor()">
+          <!-- Warm back-light (visible after door opens) -->
+          <div class="door-backlight"></div>
+
+          <!-- Left panel -->
+          <div class="fusuma-panel fusuma--left" id="door-left">
+            <div class="panel-texture"></div>
+            <div class="panel-lattice" aria-hidden="true">
+              <div class="latt-row"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="latt-row"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="latt-row"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="latt-col-group">
+                <div class="latt-col"></div><div class="latt-col"></div>
+                <div class="latt-col"></div><div class="latt-col"></div>
+              </div>
+            </div>
+            <div class="panel-kanji" aria-hidden="true">和</div>
+            <div class="panel-handle left-handle" aria-hidden="true"></div>
+          </div>
+
+          <!-- Right panel -->
+          <div class="fusuma-panel fusuma--right" id="door-right">
+            <div class="panel-texture"></div>
+            <div class="panel-lattice" aria-hidden="true">
+              <div class="latt-row"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="latt-row"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="latt-row"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="latt-col-group">
+                <div class="latt-col"></div><div class="latt-col"></div>
+                <div class="latt-col"></div><div class="latt-col"></div>
+              </div>
+            </div>
+            <div class="panel-kanji" aria-hidden="true">風</div>
+            <div class="panel-handle right-handle" aria-hidden="true"></div>
+          </div>
+
+          <!-- Click hint glow ring -->
+          <div class="door-pulse" aria-hidden="true"></div>
+        </div>
+
+        <div class="door-sill" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       SCENE 2 — THE ROOM
+  ════════════════════════════════════════════ -->
+  <section id="scene-room" class="scene" aria-label="Japanese room">
+    <div class="room-root">
+
+      <!-- Ceiling -->
+      <div class="room-ceiling" aria-hidden="true">
+        <div class="ceiling-beam"></div>
+        <div class="ceiling-beam"></div>
+        <div class="ceiling-beam"></div>
+        <div class="ceiling-lantern">🏮</div>
+      </div>
+
+      <!-- ── BACK WALL ── -->
+      <div class="room-backwall">
+
+        <!-- Left shoji window -->
+        <div class="shoji-window shoji--left" aria-hidden="true">
+          <div class="shoji-paper">
+            <div class="shoji-grid-h"></div><div class="shoji-grid-h"></div>
+            <div class="shoji-grid-h"></div><div class="shoji-grid-h"></div>
+            <div class="shoji-grid-v"></div><div class="shoji-grid-v"></div>
+            <div class="shoji-grid-v"></div>
+          </div>
+          <div class="shoji-glow"></div>
+        </div>
+
+        <!-- Painting 1 -->
+        <button class="wall-painting painting--left"
+                id="painting-1"
+                onclick="openPainting(1)"
+                aria-label="Open class painting 1">
+          <div class="frame-outer">
+            <div class="frame-inner-mat">
+              <img src="references/painting_1.jpeg" alt="Class memory 1" class="painting-photo">
+              <div class="painting-art-overlay"></div>
+            </div>
+          </div>
+          <span class="nameplate" data-i18n="painting1Label"></span>
+          <div class="hover-hint">🖼️</div>
+        </button>
+
+        <!-- Kakemono (center scroll) -->
+        <div class="kakemono" aria-hidden="true">
+          <div class="kake-roller kake-top"></div>
+          <div class="kake-body">
+            <div class="kake-text">
+              <span>先</span><span>生</span><span>へ</span>
+            </div>
+          </div>
+          <div class="kake-roller kake-bottom"></div>
+        </div>
+
+        <!-- Painting 2 -->
+        <button class="wall-painting painting--right"
+                id="painting-2"
+                onclick="openPainting(2)"
+                aria-label="Open class painting 2">
+          <div class="frame-outer">
+            <div class="frame-inner-mat">
+              <img src="references/painting_2.jpeg" alt="Class memory 2" class="painting-photo">
+              <div class="painting-art-overlay"></div>
+            </div>
+          </div>
+          <span class="nameplate" data-i18n="painting2Label"></span>
+          <div class="hover-hint">🖼️</div>
+        </button>
+
+        <!-- Right shoji window -->
+        <div class="shoji-window shoji--right" aria-hidden="true">
+          <div class="shoji-paper">
+            <div class="shoji-grid-h"></div><div class="shoji-grid-h"></div>
+            <div class="shoji-grid-h"></div><div class="shoji-grid-h"></div>
+            <div class="shoji-grid-v"></div><div class="shoji-grid-v"></div>
+            <div class="shoji-grid-v"></div>
+          </div>
+          <div class="shoji-glow"></div>
+        </div>
+
+        <!-- ── FINAL BOX (center back wall) ── -->
+        <div class="final-mount" id="final-mount">
+          <button class="final-box" id="final-box"
+                  onclick="clickFinalBox()"
+                  aria-label="Special final box">
+            <div class="final-box-lid">
+              <div class="final-lid-pattern"></div>
+            </div>
+            <div class="final-box-body">
+              <div class="final-body-emblem">✦</div>
+              <div class="final-body-line"></div>
+            </div>
+            <div class="final-lock" id="final-lock">🔒</div>
+            <div class="final-glow-ring" aria-hidden="true"></div>
+          </button>
+          <span class="final-box-label" data-i18n="finalBoxLabel" id="final-box-label"></span>
+        </div>
+
+      </div><!-- .room-backwall -->
+
+      <!-- ── FLOOR ── -->
+      <div class="room-floor">
+
+        <!-- Object 2 — Letter (left, near window) -->
+        <button class="r-obj obj-letter" id="obj-2" data-msg="2"
+                onclick="clickObject(2)" aria-label="A folded letter"
+                style="left:6%; top:4%">
+          <div class="letter-vis">
+            <div class="letter-paper">
+              <div class="letter-fold"></div>
+              <div class="letter-wax">✉</div>
+            </div>
+          </div>
+          <span class="obj-tip" data-i18n="obj2Label"></span>
+        </button>
+
+        <!-- Object 3 — Books (left corner, lower) -->
+        <button class="r-obj obj-books" id="obj-3" data-msg="3"
+                onclick="clickObject(3)" aria-label="A stack of books"
+                style="left:3%; top:54%">
+          <div class="books-vis">
+            <div class="book-spine" style="--bc:#8b1a1a;--bh:48px;--bw:38px"></div>
+            <div class="book-spine" style="--bc:#1a3870;--bh:40px;--bw:34px"></div>
+            <div class="book-spine" style="--bc:#5c3317;--bh:34px;--bw:28px"></div>
+            <div class="scroll-vis">📜</div>
+          </div>
+          <span class="obj-tip" data-i18n="obj3Label"></span>
+        </button>
+
+        <!-- Object 4 — Cushion (right floor) -->
+        <button class="r-obj obj-cushion" id="obj-4" data-msg="4"
+                onclick="clickObject(4)" aria-label="A zabuton cushion"
+                style="right:7%; top:56%">
+          <div class="cushion-vis">
+            <div class="zabuton-main"></div>
+            <div class="zabuton-trim"></div>
+            <div class="zabuton-dot"></div>
+          </div>
+          <span class="obj-tip" data-i18n="obj4Label"></span>
+        </button>
+
+        <!-- Object 5 — Game board (right, near window) -->
+        <button class="r-obj obj-game" id="obj-5" data-msg="5"
+                onclick="clickObject(5)" aria-label="A game board"
+                style="right:6%; top:4%">
+          <div class="game-vis">
+            <div class="goban">
+              <div class="goban-grid"></div>
+              <div class="go-piece white-piece"></div>
+              <div class="go-piece black-piece"></div>
+            </div>
+          </div>
+          <span class="obj-tip" data-i18n="obj5Label"></span>
+        </button>
+
+        <!-- Object 6 — Bonsai shelf (right side wall, mid-height) -->
+        <button class="r-obj obj-bonsai" id="obj-6" data-msg="6"
+                onclick="clickObject(6)" aria-label="A bonsai plant"
+                style="right:2%; top:24%">
+          <div class="bonsai-vis">
+            <div class="wall-shelf"></div>
+            <div class="bonsai-emoji">🌿</div>
+            <div class="clay-pot"></div>
+          </div>
+          <span class="obj-tip" data-i18n="obj6Label"></span>
+        </button>
+
+        <!-- Center table + Object 1 (box) -->
+        <div class="table-center-wrap">
+          <div class="jp-table">
+            <div class="table-top-surface">
+              <!-- Object 1 — Wooden box on table -->
+              <button class="r-obj obj-woodbox" id="obj-1" data-msg="1"
+                      onclick="clickObject(1)" aria-label="A wooden box">
+                <div class="wbox-vis">
+                  <div class="wbox-lid"></div>
+                  <div class="wbox-body"></div>
+                  <div class="wbox-clasp"></div>
+                </div>
+                <span class="obj-tip" data-i18n="obj1Label"></span>
+              </button>
+              <div class="table-deco" aria-hidden="true">
+                <span class="tea-emoji">🍵</span>
+              </div>
+            </div>
+            <div class="table-base" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- Zabuton near table (decorative) -->
+        <div class="floor-deco-cushion" aria-hidden="true"></div>
+
+        <!-- Ambient floor glow -->
+        <div class="floor-warm-glow" aria-hidden="true"></div>
+      </div><!-- .room-floor -->
+
+      <!-- ── SENSEI CHARACTER ── -->
+      <div id="sensei-char" class="sensei-char">
+        <!-- Speech bubble -->
+        <div id="sensei-bubble" class="sensei-bubble hidden" role="status" aria-live="polite">
+          <p id="bubble-text"></p>
+          <div class="bubble-tail"></div>
+        </div>
+        <!-- Character image -->
+        <img id="sensei-img" src="sensei.png" alt="Sensei guide character" class="sensei-img"
+             onerror="this.style.display='none';document.getElementById('sensei-fallback').style.display='flex'">
+        <!-- Emoji fallback -->
+        <div id="sensei-fallback" class="sensei-fallback" style="display:none" aria-hidden="true">
+          <span>👨‍🏫</span>
+        </div>
+        <div class="sensei-shadow" aria-hidden="true"></div>
+      </div>
+
+    </div><!-- .room-root -->
+
+    <!-- Free mode bar -->
+    <div id="free-mode-bar" class="free-mode-bar hidden">
+      <button class="replay-btn" onclick="replayTour()" data-i18n="replayBtn"></button>
+    </div>
+
+  </section><!-- #scene-room -->
+
+
+  <!-- ════════════════════════════════════════════
+       MESSAGE MODAL
+  ════════════════════════════════════════════ -->
+  <div id="msg-modal" class="modal-overlay hidden"
+       onclick="closeOnBackdrop(event,'msg-modal')"
+       role="dialog" aria-modal="true" aria-labelledby="msg-title">
+    <div class="msg-card" onclick="event.stopPropagation()">
+      <button class="card-close" onclick="closeModal('msg-modal')" aria-label="Close">✕</button>
+      <div class="msg-stamp" id="msg-stamp"></div>
+      <h2 class="msg-title" id="msg-title"></h2>
+      <div class="card-rule"></div>
+      <p class="msg-body" id="msg-body"></p>
+      <div class="card-deco">✦ &ensp; 先生 &ensp; ✦</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       FINAL MESSAGE MODAL
+  ════════════════════════════════════════════ -->
+  <div id="final-modal" class="modal-overlay final-modal hidden"
+       onclick="closeOnBackdrop(event,'final-modal')"
+       role="dialog" aria-modal="true" aria-labelledby="final-title">
+    <div class="final-card" onclick="event.stopPropagation()">
+      <button class="card-close" onclick="closeModal('final-modal')" aria-label="Close">✕</button>
+      <div id="confetti-zone" class="confetti-zone" aria-hidden="true"></div>
+      <div class="final-card-header">
+        <span class="final-icon" aria-hidden="true">⛩️</span>
+        <h2 class="final-card-title" id="final-title"></h2>
+        <span class="final-icon" aria-hidden="true">🌸</span>
+      </div>
+      <div class="card-rule gold-rule"></div>
+      <p class="final-card-body" id="final-body"></p>
+      <div class="final-from" data-i18n="signatureFrom" id="final-from"></div>
+      <div class="card-deco gold-deco">✦ &ensp; 先生ありがとうございます &ensp; ✦</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       PAINTING FULL-SCREEN OVERLAY
+  ════════════════════════════════════════════ -->
+  <div id="painting-overlay" class="painting-overlay hidden"
+       role="dialog" aria-modal="true" aria-label="Painting viewer">
+    <button class="painting-close" onclick="closePainting()" aria-label="Close painting">✕</button>
+
+    <div class="ba-wrap" id="ba-wrap">
+      <!-- Cartoon (filtered) side -->
+      <div class="ba-side ba-left" id="ba-left">
+        <img id="ba-img-art" src="" alt="Artistic painting version" class="ba-img">
+      </div>
+      <!-- Original photo side -->
+      <div class="ba-side ba-right" id="ba-right">
+        <img id="ba-img-orig" src="" alt="Original photo" class="ba-img">
+      </div>
+      <!-- Draggable divider -->
+      <div class="ba-divider" id="ba-divider" style="left:50%">
+        <div class="ba-handle" id="ba-handle" role="slider" aria-label="Slide to reveal original"
+             tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <span class="handle-arrows">◀ ▶</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ba-labels" aria-hidden="true">
+      <span data-i18n="sliderLeft"></span>
+      <span data-i18n="sliderRight"></span>
+    </div>
+  </div>
+
+
+  <script src="app.js"></script>
+</body>
+</html>
