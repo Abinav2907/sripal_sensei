@@ -121,8 +121,8 @@ const S = {
 const POS = {
   intro: { l: 48, p: 12 },
   1: { l: 42, p: 12 },
-  2: { l: 11, p: 55 },
-  3: { l: 7, p: 10 },
+  2: { l: 26, p: 55 },
+  3: { l: 22, p: 10 },
   4: { l: 69, p: 10 },
   5: { l: 71, p: 55 },
   6: { l: 78, p: 32 },
@@ -529,11 +529,10 @@ function launchConfetti() {
 }
 
 function openPainting(id) {
-  const src = 'references/painting_' + id + '.jpeg';
   const art = document.getElementById('ba-art');
   const orig = document.getElementById('ba-orig');
-  if (art) art.src = src;
-  if (orig) orig.src = src;
+  if (art) art.src = 'references/cartoon_image_' + id + '.jpeg';
+  if (orig) orig.src = 'references/painting_' + id + '.jpeg';
   setSlider(50);
   const ov = document.getElementById('painting-ov');
   if (ov) ov.classList.remove('hidden');
