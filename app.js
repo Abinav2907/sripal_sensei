@@ -481,6 +481,12 @@ function freeMode() {
 function replayTour() {
   const fb = document.getElementById('free-bar');
   if (fb) fb.classList.add('hidden');
+  const box = document.getElementById('final-box');
+  if (box) {
+    box.classList.remove('unlocked');
+    box.classList.remove('opened');
+  }
+  S.unlocked = false;
   hideBubble();
   tActive = true;
   tIdx = 0;
@@ -565,6 +571,8 @@ function clickFinalBox() {
     }
     return;
   }
+  const b = document.getElementById('final-box');
+  if (b) b.classList.add('opened'); // Visual open, stops shake animation
   snd('chime');
   renderFinal();
   const fm = document.getElementById('final-modal');

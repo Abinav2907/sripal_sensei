@@ -834,6 +834,8 @@ img { display: block; max-width: 100%; }
   border-radius: 3px 3px 0 0;
   border: 1.5px solid #805008;
   position: relative;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: left bottom;
 }
 .fb-lid-gem {
   position: absolute;
@@ -873,14 +875,21 @@ img { display: block; max-width: 100%; }
   opacity: 0;
   pointer-events: none;
 }
-.final-box.unlocked {
+.final-box.unlocked:not(.opened) {
   animation: box-shake 1.3s ease-in-out infinite;
 }
 .final-box.unlocked .fb-shine {
   opacity: 1;
   animation: final-glow-pulse 1.8s ease-in-out infinite;
 }
-.final-box.unlocked .fb-lock-icon { display: none; }
+.final-box.unlocked .fb-lock-icon,
+.final-box.opened .fb-lock-icon {
+  display: none;
+}
+.final-box.opened .fb-lid {
+  transform: translateY(-8px) rotate(-35deg);
+}
+
 .final-lbl {
   font-size: clamp(8px, 1.8vw, 10px);
   color: var(--text-m);
