@@ -490,13 +490,13 @@ function replayTour() {
 function clickObject(id) {
   wakeAudio();
   if (tActive && S.step !== id) {
-    if (S.step === 'intro' && id === 1) {
-      // First click during intro: skip intro, show guide1 hint pointing at the box.
-      // Second click (when S.step === 1) will open the box message normally below.
+    if (S.step === 'intro') {
+      // ANY click during intro: skip intro, show guide1 hint pointing at the box.
+      // The user then clicks the box (obj-1) to open the message.
       hideBubble();
       tIdx = 1;
-      runStep(1);   // moves sensei to box, shows guide1 bubble
-      return;       // do NOT open the message yet
+      runStep(1);   // sensei walks to box, shows guide1 bubble
+      return;       // do NOT open any message yet
     } else {
       const c = document.getElementById('sensei');
       if (c) {
