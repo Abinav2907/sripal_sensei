@@ -416,9 +416,11 @@ function clickObject(id) {
   wakeAudio();
   if (tActive && S.step !== id) {
     if (S.step === 'intro' && id === 1) {
+      // Bypass intro wait \u2014 move sensei to obj-1 position immediately
       hideBubble();
       tIdx = 1;
       S.step = 1;
+      moveSensei(1);
     } else {
       const c = document.getElementById('sensei');
       if (c) {
@@ -440,7 +442,7 @@ function clickObject(id) {
     updateProgress();
   }
   openMsg(id);
-  advanceTour(id);
+  // advanceTour is called in closeModal so sensei walks AFTER user reads & closes the message
 }
 
 function openMsg(id) {
@@ -512,6 +514,11 @@ function renderFinal() {
 function closeModal(id) {
   const el = document.getElementById(id);
   if (el) el.classList.add('hidden');
+  // When the message modal is closed, advance the tour to point sensei at the next object
+  if (id === 'msg-modal' && el) {
+    const closedId = parseInt(el.dataset.id, 10);
+    if (!isNaN(closedId)) advanceTour(closedId);
+  }
 }
 
 function closeBg(e, id) {
