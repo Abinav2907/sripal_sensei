@@ -415,16 +415,22 @@ function replayTour() {
 function clickObject(id) {
   wakeAudio();
   if (tActive && S.step !== id) {
-    const c = document.getElementById('sensei');
-    if (c) {
-      c.style.transition = 'none';
-      c.style.transform = 'translateX(-50%) translateY(-10px)';
-      setTimeout(() => {
-        c.style.transition = '';
-        c.style.transform = 'translateX(-50%)';
-      }, 240);
+    if (S.step === 'intro' && id === 1) {
+      hideBubble();
+      tIdx = 1;
+      S.step = 1;
+    } else {
+      const c = document.getElementById('sensei');
+      if (c) {
+        c.style.transition = 'none';
+        c.style.transform = 'translateX(-50%) translateY(-10px)';
+        setTimeout(() => {
+          c.style.transition = '';
+          c.style.transform = 'translateX(-50%)';
+        }, 240);
+      }
+      return;
     }
-    return;
   }
   snd('pop');
   if (!S.found.has(id)) {
